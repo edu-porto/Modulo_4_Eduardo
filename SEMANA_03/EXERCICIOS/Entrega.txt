@@ -1,0 +1,13 @@
+https://youtu.be/AYETbaM8mwE
+
+
+Sketch uses 208749 bytes (15%) of program storage space. Maximum is 1310720 bytes.
+Global variables use 12824 bytes (3%) of dynamic memory, leaving 314856 bytes for local variables. Maximum is 327680 bytes.
+esptool.py v4.2.1
+Serial port COM10
+Connecting......................................
+
+A fatal error occurred: Failed to connect to ESP32-S3: Download mode successfully detected, but getting no sync reply: The serial TX path seems to be down.
+For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+the selected serial port For troubleshooting steps visit: https://docs.espressif.com/projects/esptool/en/latest/troubleshooting.html
+ does not exist or your board is not connected

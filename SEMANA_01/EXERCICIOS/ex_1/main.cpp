@@ -5,31 +5,28 @@
 // entre dois valores mínimo e máximo e retorna esse valor
 using namespace std ;
 
-int main(){
-  float valorMin = 0 ;
-  float valorMedio = 0;
-  float valorMax = 0;
 
-  cout << "Digite o número mínimo ";
-  cin >> valorMin; 
-  cout << "Digite o número máximo ";
-  cin >> valorMax;
+//Função simples que recebe três inputs do usuario 
+float converteSensor(int medida, int min, int max){
 
-  cout << "Digite o número para comparar se está mais perto do mínimo ou máximo ";
-  cin >> valorMedio;
-
-int resultMin = valorMedio - valorMin;
-int resultMax = valorMax - valorMedio;
-
-float resultado = 0;
-
-int intervalo = valorMax -+ valorMin ;
-int media = valorMedio -+ valorMin ;
-int resposta = (media * 100)/intervalo ;
+float intervalo = max - min ;
+float medidas = medida - min ;
+float resposta = medidas/intervalo ;
   
-  cout << "Esse é o valor mínimo : " << resposta << "%";
-
-  return 0;
+return resposta;
+  
 }
 
+// Descomente a função main abaixo para testar o exercício 1
+int main(){
+  cout << "Teste Ex 1" << endl;
+	cout << converteSensor(100,100,400) << endl;
+  //valor esperado: 0
+  
+	cout << converteSensor(400,100,400) << endl;
+  //valor esperado: 1
+  
+	cout << converteSensor(250,100,400) << endl;
+  //valor esperado: 0.5
+}
 

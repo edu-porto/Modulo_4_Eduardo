@@ -1,3 +1,52 @@
+/////////////////////////////////////////////////////////////////////////////
+//////////////////// CÓDIGO FIREBASE 
+
+
+
+//Inicializando o firebase 
+const firebaseConfig = {
+    apiKey: "AIzaSyBGxOrXcXZ4pH42Weyum2ek9tWVztP0WyE",
+    authDomain: "crudjsfb-d5cb2.firebaseapp.com",
+    databaseURL: "https://crudjsfb-d5cb2-default-rtdb.firebaseio.com",
+    projectId: "crudjsfb-d5cb2",
+    storageBucket: "crudjsfb-d5cb2.appspot.com",
+    messagingSenderId: "26388105663",
+    appId: "1:26388105663:web:8f28de293c19dcdaaf790a"
+  };
+firebase.initializeApp(firebaseConfig);
+
+
+
+
+//Definindo um nome para a linha no firebase
+var messagesRef = firebase.database().ref('Data')
+ 
+
+
+//Função post do estado quando o jogador perde 
+function lostMessage() {
+    messagesRef.set({
+        estate: 0,
+    });
+}
+
+//Função post do estado quando o jogador ganha 
+function winMessage() {
+    messagesRef.set({
+        estate: 1,
+    });
+}
+
+//Função post do estado quando o jogo reinicia  
+function restartMessage() {
+    messagesRef.set({
+        estate: 3,
+    });
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+// CÓDIGO DO JOGO
 const wordE1 = document.getElementById('word');
 const wrongLettersE1 = document.getElementById('wrong-letters');
 const playAgainBtn = document.getElementById('play-button');
@@ -9,21 +58,28 @@ const startGame = document.getElementById('beginGamePhrase');
 const figureParts= document.querySelectorAll(".figure-part");
 
 
+//Pegando os dados da outra página em formato JSON
+const myObjectString2 = localStorage.getItem('objectGreeting');
+const myObject2 = JSON.parse(myObjectString2);
 
-const words = ['naruto', 'chave', 'machado', 'aeroporto', 'oculos', 'garrafa', 'agenda', 'cama', 'armario', 'tela', 'cadeira', ' irmao', 'mesa' ,'folha', 'jardim', 'casaco'];
+//Transformando JSON em array para enviar par o jogo
+var wordConverted = []
+for (var x in myObject2) {
+    wordConverted.push([x, myObject2[x]])
+}
+//Removendo o primeiro elemento da array pois é a classificação do JSON
+var flatArray = wordConverted.flat()
+console.log(flatArray[1]);  
 
-let selectedWord = words[Math.floor(Math.random() * words.length)];
+
+//Definindo o elemento 1 da array como a palavra a ser adivinhada pelo outro player
+let selectedWord = flatArray[1]
 
 const correctLetters = [];
 const wrongLetters = [];
 
 
-
-
-
-
-
-//Mostra a palavra 
+//Mostra a palavra  
 function displayWord(){
     wordE1.innerHTML = `
     ${selectedWord
@@ -46,14 +102,12 @@ function displayWord(){
         popup.style.display= 'flex';
 
         //Envia que ganhou para o servidor 
-        $.post("/win", 
-        { name: "Win"}, function(data) {
-        console.log(data);
-        alert(data);
-    })
+        winMessage()
       
     }
 }
+
+
 
 
 function updateWrongLetterE1(){
@@ -80,11 +134,7 @@ function updateWrongLetterE1(){
         finalMessage.innerText = 'Você perdeu ';
         popup.style.display = 'flex';
         //Envia que perdeu para o servidor
-        $.post("/lost", 
-        { name: "Lost"}, function(data) {
-        console.log(data);
-        alert(data);
-    })
+        lostMessage()
     }
 }
 
@@ -127,13 +177,15 @@ playAgainBtn.addEventListener('click', () => {
     correctLetters.splice(0);
     wrongLetters.splice(0);
 
-    selectedWord = words[Math.floor(Math.random() * words.length)];
+    restartMessage()
 
     displayWord();
 
     updateWrongLetterE1();
 
     popup.style.display = 'none';
+
+
 });
 
 displayWord();

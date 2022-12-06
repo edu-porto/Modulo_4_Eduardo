@@ -3,7 +3,6 @@ const express = require('express');
 const app = express();
 
 
-
 app.use(express.static(__dirname  ));
 
 app.get('/', function(req, res) {
@@ -22,14 +21,3 @@ app.use(express.static(static_path));
 app.use(express.urlencoded({ extended: true }));
   
 
-app.post("/lost", (req, res) => {
-    res.json([{
-       name_recieved: req.body.name
-    }])
- })
-
- app.post("/win", (req, res) => {
-    res.json([{
-       name_recieved: req.body.name
-    }])
- })
